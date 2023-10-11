@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#f1faee", "group": 2, "id": "Z46.59", "label": "Encounter For Fitting And Adjustment Of Other Gastrointestinal Appliance And Device", "nodesize": 750, "shape": "dot", "size": 20, "title": "Encounter For Fitting And Adjustment Of Other Gastrointestinal Appliance And Device"}, {"color": "#a8dadc", "group": 2, "id": "Cardiomyopathy", "label": "Cardiomyopathy", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Cardiomyopathy"}, {"color": "#f1faee", "group": 2, "id": "I40.0", "label": "Infective Myocarditis", "nodesize": 750, "shape": "dot", "size": 20, "title": "Infective Myocarditis"}, {"color": "#a8dadc", "group": 1, "id": "P94.2", "label": "Congenital Hypotonia", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Congenital Hypotonia"}, {"color": "#f1faee", "group": 2, "id": "R29.898", "label": "Other Symptoms And Signs Involving The Musculoskeletal System", "nodesize": 750, "shape": "dot", "size": 20, "title": "Other Symptoms And Signs Involving The Musculoskeletal System"}, {"color": "#f1faee", "group": 2, "id": "R62.50", "label": "Unspecified Lack Of Expected Normal Physiological Development In Childhood", "nodesize": 750, "shape": "dot", "size": 20, "title": "Unspecified Lack Of Expected Normal Physiological Development In Childhood"}, {"color": "#f1faee", "group": 2, "id": "Q90.9", "label": "Down Syndrome", "nodesize": 750, "shape": "dot", "size": 20, "title": "Down Syndrome"}, {"color": "#f1faee", "group": 2, "id": "F88", "label": "Other Disorders Of Psychological Development", "nodesize": 750, "shape": "dot", "size": 20, "title": "Other Disorders Of Psychological Development"}, {"color": "#f1faee", "group": 2, "id": "F82", "label": "Specific Developmental Disorder Of Motor Function", "nodesize": 750, "shape": "dot", "size": 20, "title": "Specific Developmental Disorder Of Motor Function"}, {"color": "#f1faee", "group": 2, "id": "I82.0", "label": "Budd-Chiari Syndrome", "nodesize": 750, "shape": "dot", "size": 20, "title": "Budd-Chiari Syndrome"}, {"color": "#f1faee", "group": 2, "id": "Z84.81", "label": "Family History Of Carrier Of Genetic Disease", "nodesize": 750, "shape": "dot", "size": 20, "title": "Family History Of Carrier Of Genetic Disease"}, {"color": "#f1faee", "group": 2, "id": "P83.2", "label": "Hydrops Fetalis Not Due To Hemolytic Disease", "nodesize": 750, "shape": "dot", "size": 20, "title": "Hydrops Fetalis Not Due To Hemolytic Disease"}, {"color": "#a8dadc", "group": 1, "id": "J15.8", "label": "Pneumonia Due To Other Specified Bacteria", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Pneumonia Due To Other Specified Bacteria"}, {"color": "#f1faee", "group": 2, "id": "R06.2", "label": "Wheezing", "nodesize": 750, "shape": "dot", "size": 20, "title": "Wheezing"}, {"color": "#f1faee", "group": 2, "id": "J96.00", "label": "Acute Respiratory Failure", "nodesize": 750, "shape": "dot", "size": 20, "title": "Acute Respiratory Failure"}, {"color": "#f1faee", "group": 2, "id": "J20.9", "label": "Acute Bronchitis", "nodesize": 750, "shape": "dot", "size": 20, "title": "Acute Bronchitis"}, {"color": "#f1faee", "group": 2, "id": "J13", "label": "Pneumonia Due To Streptococcus Pneumoniae", "nodesize": 750, "shape": "dot", "size": 20, "title": "Pneumonia Due To Streptococcus Pneumoniae"}, {"color": "#f1faee", "group": 2, "id": "J30.2", "label": "Other Seasonal Allergic Rhinitis", "nodesize": 750, "shape": "dot", "size": 20, "title": "Other Seasonal Allergic Rhinitis"}, {"color": "#f1faee", "group": 2, "id": "Z86.79", "label": "Personal History Of Other Diseases Of The Circulatory System", "nodesize": 750, "shape": "dot", "size": 20, "title": "Personal History Of Other Diseases Of The Circulatory System"}, {"color": "#a8dadc", "group": 1, "id": "Q24.9", "label": "Congenital Malformation Of Heart", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Congenital Malformation Of Heart"}, {"color": "#f1faee", "group": 2, "id": "I50.9", "label": "Heart Failure", "nodesize": 750, "shape": "dot", "size": 20, "title": "Heart Failure"}, {"color": "#f1faee", "group": 2, "id": "Z87.74", "label": "Personal History Of (Corrected) Congenital Malformations Of Heart And Circulatory System", "nodesize": 750, "shape": "dot", "size": 20, "title": "Personal History Of (Corrected) Congenital Malformations Of Heart And Circulatory System"}, {"color": "#f1faee", "group": 2, "id": "Q25.0", "label": "Patent Ductus Arteriosus", "nodesize": 750, "shape": "dot", "size": 20, "title": "Patent Ductus Arteriosus"}, {"color": "#f1faee", "group": 2, "id": "Q21.0", "label": "Ventricular Septal Defect", "nodesize": 750, "shape": "dot", "size": 20, "title": "Ventricular Septal Defect"}, {"color": "#f1faee", "group": 2, "id": "Q21.1", "label": "Atrial Septal Defect", "nodesize": 750, "shape": "dot", "size": 20, "title": "Atrial Septal Defect"}, {"color": "#a8dadc", "group": 1, "id": "I50.22", "label": "Chronic Systolic (Congestive) Heart Failure", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Chronic Systolic (Congestive) Heart Failure"}, {"color": "#a8dadc", "group": 1, "id": "B34.1", "label": "Enterovirus Infection", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Enterovirus Infection"}, {"color": "#a8dadc", "group": 1, "id": "B34.8", "label": "Other Viral Infections Of Unspecified Site", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Other Viral Infections Of Unspecified Site"}, {"color": "#f1faee", "group": 2, "id": "E86.0", "label": "Dehydration", "nodesize": 750, "shape": "dot", "size": 20, "title": "Dehydration"}, {"color": "#f1faee", "group": 2, "id": "U07.1", "label": "Covid-19", "nodesize": 750, "shape": "dot", "size": 20, "title": "Covid-19"}, {"color": "#f1faee", "group": 2, "id": "J06.9", "label": "Acute Upper Respiratory Infection", "nodesize": 750, "shape": "dot", "size": 20, "title": "Acute Upper Respiratory Infection"}, {"color": "#f1faee", "group": 2, "id": "T50.A15A", "label": "Adverse Effect Of Pertussis Vaccine", "nodesize": 750, "shape": "dot", "size": 20, "title": "Adverse Effect Of Pertussis Vaccine"}, {"color": "#f1faee", "group": 2, "id": "E87.8", "label": "Other Disorders Of Electrolyte And Fluid Balance", "nodesize": 750, "shape": "dot", "size": 20, "title": "Other Disorders Of Electrolyte And Fluid Balance"}, {"color": "#f1faee", "group": 2, "id": "J21.8", "label": "Acute Bronchiolitis Due To Other Specified Organisms", "nodesize": 750, "shape": "dot", "size": 20, "title": "Acute Bronchiolitis Due To Other Specified Organisms"}, {"color": "#f1faee", "group": 2, "id": "J15.9", "label": "Unspecified Bacterial Pneumonia", "nodesize": 750, "shape": "dot", "size": 20, "title": "Unspecified Bacterial Pneumonia"}, {"color": "#f1faee", "group": 2, "id": "B34.0", "label": "Adenovirus Infection", "nodesize": 750, "shape": "dot", "size": 20, "title": "Adenovirus Infection"}, {"color": "#f1faee", "group": 2, "id": "J45.901", "label": "Unspecified Asthma With (Acute) Exacerbation", "nodesize": 750, "shape": "dot", "size": 20, "title": "Unspecified Asthma With (Acute) Exacerbation"}, {"color": "#a8dadc", "group": 1, "id": "Q53.20", "label": "Undescended Testicle", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Undescended Testicle"}, {"color": "#f1faee", "group": 2, "id": "Q53.9", "label": "Undescended Testicle", "nodesize": 750, "shape": "dot", "size": 20, "title": "Undescended Testicle"}, {"color": "#f1faee", "group": 2, "id": "Q55.22", "label": "Retractile Testis", "nodesize": 750, "shape": "dot", "size": 20, "title": "Retractile Testis"}, {"color": "#f1faee", "group": 2, "id": "Q53.10", "label": "Unspecified Undescended Testicle", "nodesize": 750, "shape": "dot", "size": 20, "title": "Unspecified Undescended Testicle"}, {"color": "#f1faee", "group": 2, "id": "Q53.212", "label": "Bilateral Inguinal Testes", "nodesize": 750, "shape": "dot", "size": 20, "title": "Bilateral Inguinal Testes"}, {"color": "#f1faee", "group": 2, "id": "Z13.84", "label": "Encounter For Screening For Dental Disorders", "nodesize": 750, "shape": "dot", "size": 20, "title": "Encounter For Screening For Dental Disorders"}, {"color": "#f1faee", "group": 2, "id": "Q21.2", "label": "Atrioventricular Septal Defect", "nodesize": 750, "shape": "dot", "size": 20, "title": "Atrioventricular Septal Defect"}, {"color": "#f1faee", "group": 2, "id": "I50.23", "label": "Acute On Chronic Systolic (Congestive) Heart Failure", "nodesize": 750, "shape": "dot", "size": 20, "title": "Acute On Chronic Systolic (Congestive) Heart Failure"}, {"color": "#f1faee", "group": 2, "id": "I27.20", "label": "Pulmonary Hypertension", "nodesize": 750, "shape": "dot", "size": 20, "title": "Pulmonary Hypertension"}, {"color": "#f1faee", "group": 2, "id": "I27.21", "label": "Secondary Pulmonary Arterial Hypertension", "nodesize": 750, "shape": "dot", "size": 20, "title": "Secondary Pulmonary Arterial Hypertension"}, {"color": "#a8dadc", "group": 1, "id": "T50.Z95A", "label": "Adverse Effect Of Other Vaccines And Biological Substances", "nodesize": 1500, "shape": "dot", "size": 20, "title": "Adverse Effect Of Other Vaccines And Biological Substances"}, {"color": "#f1faee", "group": 2, "id": "R50.83", "label": "Postvaccination Fever", "nodesize": 750, "shape": "dot", "size": 20, "title": "Postvaccination Fever"}, {"color": "#f1faee", "group": 2, "id": "L85.3", "label": "Xerosis Cutis", "nodesize": 750, "shape": "dot", "size": 20, "title": "Xerosis Cutis"}, {"color": "#f1faee", "group": 2, "id": "R63.8", "label": "Other Symptoms And Signs Concerning Food And Fluid Intake", "nodesize": 750, "shape": "dot", "size": 20, "title": "Other Symptoms And Signs Concerning Food And Fluid Intake"}, {"color": "#f1faee", "group": 2, "id": "E55.9", "label": "Vitamin D Deficiency", "nodesize": 750, "shape": "dot", "size": 20, "title": "Vitamin D Deficiency"}, {"color": "#f1faee", "group": 2, "id": "L02.424", "label": "Furuncle Of Left Upper Limb", "nodesize": 750, "shape": "dot", "size": 20, "title": "Furuncle Of Left Upper Limb"}]);
+                  edges = new vis.DataSet([{"from": "Z46.59", "to": "Cardiomyopathy", "width": 1}, {"from": "I40.0", "to": "Cardiomyopathy", "width": 1}, {"from": "P94.2", "to": "R29.898", "width": 1}, {"from": "P94.2", "to": "R62.50", "width": 1}, {"from": "P94.2", "to": "Q90.9", "width": 1}, {"from": "P94.2", "to": "F88", "width": 1}, {"from": "P94.2", "to": "F82", "width": 1}, {"from": "P94.2", "to": "Cardiomyopathy", "width": 1}, {"from": "I82.0", "to": "Cardiomyopathy", "width": 1}, {"from": "Z84.81", "to": "Cardiomyopathy", "width": 1}, {"from": "P83.2", "to": "Cardiomyopathy", "width": 1}, {"from": "J15.8", "to": "R06.2", "width": 1}, {"from": "J15.8", "to": "J96.00", "width": 1}, {"from": "J15.8", "to": "J20.9", "width": 1}, {"from": "J15.8", "to": "J13", "width": 1}, {"from": "J15.8", "to": "J30.2", "width": 1}, {"from": "J15.8", "to": "Cardiomyopathy", "width": 1}, {"from": "Z86.79", "to": "Cardiomyopathy", "width": 1}, {"from": "Q24.9", "to": "I50.9", "width": 1}, {"from": "Q24.9", "to": "Z87.74", "width": 1}, {"from": "Q24.9", "to": "Q25.0", "width": 1}, {"from": "Q24.9", "to": "Q21.0", "width": 1}, {"from": "Q24.9", "to": "Q21.1", "width": 1}, {"from": "I50.9", "to": "I50.22", "width": 1}, {"from": "B34.1", "to": "B34.8", "width": 1}, {"from": "B34.1", "to": "E86.0", "width": 1}, {"from": "B34.1", "to": "U07.1", "width": 1}, {"from": "B34.1", "to": "J06.9", "width": 1}, {"from": "B34.1", "to": "T50.A15A", "width": 1}, {"from": "B34.8", "to": "E87.8", "width": 1}, {"from": "B34.8", "to": "J21.8", "width": 1}, {"from": "B34.8", "to": "J15.9", "width": 1}, {"from": "B34.8", "to": "B34.0", "width": 1}, {"from": "B34.8", "to": "J45.901", "width": 1}, {"from": "Q53.20", "to": "Q53.9", "width": 1}, {"from": "Q53.20", "to": "Q55.22", "width": 1}, {"from": "Q53.20", "to": "Q53.10", "width": 1}, {"from": "Q53.20", "to": "Q53.212", "width": 1}, {"from": "Q53.20", "to": "Z13.84", "width": 1}, {"from": "I50.22", "to": "Q21.2", "width": 1}, {"from": "I50.22", "to": "I50.23", "width": 1}, {"from": "I50.22", "to": "I27.20", "width": 1}, {"from": "I50.22", "to": "I27.21", "width": 1}, {"from": "T50.Z95A", "to": "R50.83", "width": 1}, {"from": "T50.Z95A", "to": "L85.3", "width": 1}, {"from": "T50.Z95A", "to": "R63.8", "width": 1}, {"from": "T50.Z95A", "to": "E55.9", "width": 1}, {"from": "T50.Z95A", "to": "L02.424", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 12, "face": "Arial"}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
